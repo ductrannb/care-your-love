@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "396936633084",
+    "project_id": "login-1cbaf",
+    "storage_bucket": "login-1cbaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396936633084:android:e237d8a576fa37cdc35579",
+        "android_client_info": {
+          "package_name": "com.example.careyourlove"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK7-GR5yLb9krP74SnYGBduAQTqbi3JnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396936633084:android:39cfc5ed85f0eca4c35579",
+        "android_client_info": {
+          "package_name": "com.example.helloworld"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK7-GR5yLb9krP74SnYGBduAQTqbi3JnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
