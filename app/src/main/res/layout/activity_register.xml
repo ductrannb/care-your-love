@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ff365b">
+    android:background="#BCF39FBA"
+    android:gravity="center">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,6 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="REGISTER"
+        android:backgroundTint="@color/white"
+        android:textColor="#BCF39FBA"
         android:layout_gravity="center"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
