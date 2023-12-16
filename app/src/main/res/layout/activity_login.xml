@@ -2,64 +2,90 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#BCF39FBA"
-    android:gravity="center">
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:text="Welcome to Care Your Love!"
-        android:textColor="#EC685E"
-        android:textSize="30dp"
         android:textAlignment="center"
-        android:layout_marginBottom="50px"/>
+        android:textColor="#EC685E"
+        android:textSize="30dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30px"
         android:text="EMAIL"
         android:textColor="@color/white"
-        android:textSize="20dp"
-        android:layout_marginLeft="30px"/>
+        android:textSize="20dp" />
+
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
         android:layout_marginLeft="30px"
-        android:layout_marginRight="30px"/>
+        android:layout_marginRight="30px"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30px"
+        android:layout_marginTop="20dp"
         android:text="PASSWORD"
         android:textColor="@color/white"
-        android:textSize="20dp"
-        android:layout_marginLeft="30px"/>
+        android:textSize="20dp" />
+
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="numberPassword"
         android:layout_marginLeft="30px"
-        android:layout_marginRight="30px"/>
-    <Button
-        android:id="@+id/btnlogin"
+        android:layout_marginRight="30px"
+        android:hint="Password"
+        android:inputType="numberPassword" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:paddingRight="20pt"
+        android:paddingLeft="20pt">
+
+        <Button
+            android:id="@+id/btnlogin"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|start"
+            android:backgroundTint="@color/white"
+            android:text="LOGIN"
+            android:textColor="#F39FBA"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btnregister"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:backgroundTint="@color/white"
+            android:text="REGISTER"
+            android:textColor="#F39FBA"
+            android:textSize="20dp" />
+    </GridLayout>
+    <TextView
+        android:id="@+id/forgot_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LOGIN"
-        android:layout_gravity="center"
-        android:textSize="20dp"
-        android:backgroundTint="@color/white"
-        android:textColor="#F39FBA"/>
-    <Button
-        android:id="@+id/btnregister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="REGISTER"
-        android:layout_gravity="center"
-        android:textSize="20dp"
-        android:backgroundTint="@color/white"
-        android:textColor="#F39FBA"/>
+        android:layout_gravity="end"
+        android:textSize="17dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="47dp"
+        android:text="Forgot Password?"
+        android:textColor="#0D30DF"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
