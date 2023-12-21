@@ -8,19 +8,19 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="Chào mừng bạn đến với
-        Care Your Love!"
-        android:textAlignment="center"
+        android:text="Quên mật khẩu"
+        android:textSize="30dp"
         android:textColor="#EC685E"
-        android:textSize="30dp" />
+        android:textAlignment="center"
+        android:layout_marginBottom="40dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
-        android:text="Địa chỉ Email"
+        android:text="Nhập địa chỉ Email"
         android:textColor="@color/white"
         android:textSize="20dp" />
+
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
@@ -34,50 +34,40 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
         android:layout_marginTop="20dp"
-        android:text="Mật khẩu"
+        android:text="Nhập mã OTP"
         android:textColor="@color/white"
         android:textSize="20dp" />
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/otp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
         android:layout_marginRight="30px"
-        android:hint="Mật khẩu"
+        android:hint="Mã OTP"
         android:inputType="numberPassword" />
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:paddingRight="20pt"
-        android:paddingLeft="20pt">
-        <Button
-            android:id="@+id/btnlogin"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|start"
-            android:backgroundTint="@color/white"
-            android:text="Đăng nhập"
-            android:textColor="#F39FBA"
-            android:textSize="20dp" />
-        <Button
-            android:id="@+id/btnregister"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|end"
-            android:backgroundTint="@color/white"
-            android:text="Đăng ký"
-            android:textColor="#F39FBA"
-            android:textSize="20dp" />
-    </GridLayout>
-    <TextView
-        android:id="@+id/forgot_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:textSize="17dp"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="47dp"
-        android:text="Quên mật khẩu?"
-        android:textColor="#0D30DF"/>
+        android:paddingLeft="30pt"
+        android:paddingRight="30pt"
+        android:textAlignment="center">
+        <TextView
+            android:id="@+id/get_otp"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:text="Gửi mã OTP"
+            android:textSize="20dp"
+            android:textColor="#0D30DF"
+            android:layout_gravity="start"/>
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="Tiếp tục"
+            android:textSize="20dp"
+            android:layout_gravity="end"
+            android:backgroundTint="@color/white"
+            android:textColor="#F39FBA"/>
+    </GridLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>
