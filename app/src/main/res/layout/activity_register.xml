@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:inputType="textEmailAddress"
         android:layout_marginLeft="30px"
         android:layout_marginRight="30px"/>
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Mật khẩu"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:inputType="numberPassword"
         android:layout_marginLeft="30px"
         android:layout_marginRight="30px"/>
