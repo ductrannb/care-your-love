@@ -5,16 +5,15 @@
     android:background="@drawable/background"
     android:gravity="center"
     android:orientation="vertical">
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:text="Welcome to Care Your Love!"
+        android:text="Chào mừng bạn đến với
+        Care Your Love!"
         android:textAlignment="center"
         android:textColor="#EC685E"
         android:textSize="30dp" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +21,6 @@
         android:text="Địa chỉ Email"
         android:textColor="@color/white"
         android:textSize="20dp" />
-
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
@@ -31,7 +29,6 @@
         android:layout_marginRight="30px"
         android:hint="Email"
         android:inputType="textEmailAddress" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,14 +37,13 @@
         android:text="Mật khẩu"
         android:textColor="@color/white"
         android:textSize="20dp" />
-
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
         android:layout_marginRight="30px"
-        android:hint="Password"
+        android:hint="Mật khẩu"
         android:inputType="numberPassword" />
     <GridLayout
         android:layout_width="match_parent"
@@ -84,5 +80,4 @@
         android:layout_marginRight="47dp"
         android:text="Quên mật khẩu?"
         android:textColor="#0D30DF"/>
-
 </androidx.appcompat.widget.LinearLayoutCompat>

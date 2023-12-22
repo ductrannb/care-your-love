@@ -72,11 +72,11 @@ public class LoginActivity extends AppCompatActivity {
         pass = passedit.getText().toString();
         // kieerm tra xem da nhap email password chua
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(this,"Vui long nhap email!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Vui lòng nhập email!", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(pass)) {
-            Toast.makeText(this,"Vui long nhap password!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
             return;
         }
         // dang nhap email, pass thanh cong goi ham onComplate va tra qua bien task
@@ -84,11 +84,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Dang nhap thanh cong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Dang nhap khong thanh cong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
         });

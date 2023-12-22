@@ -1,6 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_main"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hãy điền các thông tin dưới đây để chúng tôi có thể dự đoán chính xác hơn!"
+        android:layout_marginTop="40dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30dp" />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nhập năm sinh của bạn:"
+            android:textColor="@color/black"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"/>
+        <Button
+            android:id="@+id/btnYearOfBirth"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:layout_gravity="end"
+            android:textSize="20dp"
+            android:layout_marginRight="15dp"
+            style="?android:spinnerStyle"
+            android:onClick="openYearOfBirth"/>
+    </GridLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Độ dài chu kỳ của bạn khoảng bao lâu?"
+        android:textSize="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"/>
+    <CheckBox
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:text="Dưới 2 ngày"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:layout_marginLeft="40dp"/>
+    <CheckBox
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:text="Dưới 7 ngày"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:layout_marginLeft="40dp"/>
+    <CheckBox
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:text="Trên 7 ngày"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:layout_marginLeft="40dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nhập ngày bắt đầu kỳ kinh gần đây nhất:"
+        android:textSize="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
