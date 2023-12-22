@@ -45,22 +45,22 @@ public class RegisterActivity extends AppCompatActivity {
         pass = passedit.getText().toString();
         // kieerm tra xem da nhap email password chua
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(this,"Vui long nhap email!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Vui lòng nhập email!", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(pass)) {
-            Toast.makeText(this,"Vui long nhap password!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
             return;
         }
         mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Tao tai khoan thanh cong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Đăng ký tài khoản thành công", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
                     startActivity(intent);
                 } else  {
-                    Toast.makeText(getApplicationContext(),"Tao tai khoan khong thanh cong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Đăng ký thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
         });
