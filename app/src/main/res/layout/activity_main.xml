@@ -49,40 +49,4 @@
         app:itemIconTint="@color/lavender"
         app:itemTextColor="@color/lavender"
     />
-<!--    <androidx.viewpager.widget.ViewPager-->
-<!--        android:id="@+id/view_page"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_above="@+id/bottom_navigation"/>-->
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--        android:id="@+id/bottom_navigation"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:background="#F8BCD1"-->
-<!--        app:itemIconTint="@color/white"-->
-<!--        app:menu="@menu/nav_bottom"/>-->
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".MainActivity"
-        android:background="@drawable/background_main">
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_page"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/bottom_navigation"/>
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#F8BCD1"
-            app:itemIconTint="@color/white"
-            app:menu="@menu/nav_bottom"/>
-
-    </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
