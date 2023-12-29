@@ -19,15 +19,15 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        Button btnAdd = view.findViewById(R.id.btn_test_add);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                User user = new User( "duc@gmail.com", "123456", "Trần Xuân Đức");
-                AppDatabase.getInstance(requireContext()).userDao().insert(user);
-                Toast.makeText(requireContext(),"Sucess", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        Button btnAdd = view.findViewById(R.id.btn_test_add);
+//        btnAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                User user = new User( "duc@gmail.com", "123456", "Trần Xuân Đức");
+////                AppDatabase.getInstance(requireContext()).userDao().insert(user);
+////                Toast.makeText(requireContext(),"Sucess", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         return view;
     }
 }

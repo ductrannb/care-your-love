@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReportFragment">
+    tools:context=".ReportFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/previous_cycle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Report Fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:textColor="@color/lavender"
-        />
+        android:textSize="16dp"
+        android:text="Độ dài chu kỳ trước: ">
+    </TextView>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/previous_menstruation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="Độ dài kỳ kinh trước: ">
+    </TextView>
+
+    <TextView
+        android:id="@+id/general_condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="Tình trạng: ">
+    </TextView>
+</LinearLayout>
