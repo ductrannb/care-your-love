@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1049985188483",
+    "firebase_url": "https://care-your-love-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "care-your-love",
+    "storage_bucket": "care-your-love.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049985188483:android:33fb4251f12bcd5f3291b6",
+        "android_client_info": {
+          "package_name": "com.ducanh.care_your_love"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgefdzaXq7NRfDLpx60OlIkccLCYnVEJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
