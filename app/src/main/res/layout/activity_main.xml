@@ -6,70 +6,109 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:gravity="center"
-    android:background="@drawable/background"
+    android:background="@drawable/background_main"
     >
 
-    <androidx.cardview.widget.CardView
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="20dp"-->
+<!--        app:cardCornerRadius="30dp"-->
+<!--        app:cardElevation="20dp">-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:padding="24dp">-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Tên màn hình"-->
+<!--                android:textSize="36sp"-->
+<!--                android:textColor="@color/main_color"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textStyle="bold"/>-->
+
+<!--            <EditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:background="@drawable/input_border"-->
+<!--                android:layout_marginTop="40dp"-->
+<!--                android:padding="8dp"-->
+<!--                android:drawableLeft="@drawable/icon_person"-->
+<!--                android:drawablePadding="8dp"-->
+<!--                android:hint="Tên đăng nhập"/>-->
+
+<!--            <EditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:background="@drawable/input_border"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:padding="8dp"-->
+<!--                android:drawableLeft="@drawable/icon_person"-->
+<!--                android:drawablePadding="8dp"-->
+<!--                android:hint="Mật khẩu"/>-->
+
+<!--            <Button-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:text="Đăng nhập"-->
+<!--                android:textSize="18dp"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:backgroundTint="@color/main_color"-->
+<!--                app:cornerRadius="20dp"/>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Bạn chưa có tài khoản?"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:textSize="18dp"-->
+<!--                    android:textColor="@color/lavender"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Đăng ký"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:textSize="18dp"-->
+<!--                    android:textColor="@color/lavender"-->
+<!--                    android:textAppearance="?textAppearanceBodyMedium"-->
+<!--                    style="text-decoration:underline;"/>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/textView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Đoạn văn bản cần gạch chân dưới"-->
+<!--                    android:spannable="true"-->
+<!--                    android:textAppearance="?android:textAppearanceMedium"-->
+<!--                    >-->
+<!--                </TextView>-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+
+<!--    </androidx.cardview.widget.CardView>-->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="20dp">
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:padding="24dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tên màn hình"
-                android:textSize="36sp"
-                android:textColor="@color/main_color"
-                android:textAlignment="center"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/input_border"
-                android:layout_marginTop="40dp"
-                android:padding="8dp"
-                android:drawableLeft="@drawable/icon_person"
-                android:drawablePadding="8dp"
-                android:hint="Tên đăng nhập"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/input_border"
-                android:layout_marginTop="20dp"
-                android:padding="8dp"
-                android:drawableLeft="@drawable/icon_person"
-                android:drawablePadding="8dp"
-                android:hint="Mật khẩu"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Đăng nhập"
-                android:textSize="18dp"
-                android:layout_marginTop="30dp"
-                android:backgroundTint="@color/main_color"
-                app:cornerRadius="20dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bạn chưa có tài khoản? Đăng ký"
-                android:layout_gravity="center"
-                android:padding="8dp"
-                android:layout_marginTop="10dp"
-                android:textSize="18dp"
-                android:textColor="@color/lavender"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            android:drawableLeft="@drawable/icon_add_post"
+            android:text="Tạo bài viết"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:backgroundTint="@color/main_color"/>
+    </RelativeLayout>
 
 </LinearLayout>
