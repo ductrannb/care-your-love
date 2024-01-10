@@ -7,13 +7,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PostDetailActivity"
-    android:padding="12dp">
+    android:paddingBottom="12dp">
 
     <LinearLayout
         android:id="@+id/post_detail_header_container"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
+        android:paddingBottom="12dp"
+        android:background="@drawable/border_bottom"
         >
         <ImageButton
             android:layout_width="0dp"
@@ -71,6 +73,8 @@
         android:id="@+id/post_detail_comment_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:paddingBottom="40dp"
         android:layout_below="@+id/post_detail_content"/>
 
@@ -81,7 +85,9 @@
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
-        android:layout_alignBottom="@+id/post_detail_comment_list">
+        android:layout_alignBottom="@+id/post_detail_comment_list"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
         <EditText
             android:id="@+id/input_content_comment"
