@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "672574269708",
+    "firebase_url": "https://careyourlove-62354-default-rtdb.firebaseio.com",
+    "project_id": "careyourlove-62354",
+    "storage_bucket": "careyourlove-62354.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672574269708:android:9f9099ad817e640156c129",
+        "android_client_info": {
+          "package_name": "com.example.careyourlove"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG-63_HjA-XBwfGvobmjoYxFDBfpj3cAw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
