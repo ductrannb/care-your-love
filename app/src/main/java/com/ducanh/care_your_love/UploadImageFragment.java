@@ -7,24 +7,27 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddPostFragment#newInstance} factory method to
+ * Use the {@link UploadImageFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddPostFragment extends Fragment{
+public class UploadImageFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Button btnUploadImage;
+    private static final int MAX_IMAGE_COUNT = 5;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public AddPostFragment() {
+    public UploadImageFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +37,11 @@ public class AddPostFragment extends Fragment{
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BlankFragment.
+     * @return A new instance of fragment UploadImageFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddPostFragment newInstance(String param1, String param2) {
-        AddPostFragment fragment = new AddPostFragment();
+    public static UploadImageFragment newInstance(String param1, String param2) {
+        UploadImageFragment fragment = new UploadImageFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,4 +64,6 @@ public class AddPostFragment extends Fragment{
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_post, container, false);
     }
+
+
 }
