@@ -20,9 +20,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_list_post"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="45dp"
+            android:paddingTop="5dp"/>
         <Button
+            android:id="@+id/home_link_create_post"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:drawableLeft="@drawable/icon_add_post"
             android:text="Tạo bài viết"
             android:layout_alignParentEnd="true"
