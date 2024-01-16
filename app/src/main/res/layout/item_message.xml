@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/chat_message_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingRight="5dp"
-    android:paddingLeft="20dp">
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/chat_message_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/self_message_border"
-        android:backgroundTint="@color/input_border"
         android:padding="10dp"
-        android:textColor="@color/white"
         android:textSize="14sp"
-        android:text="Đây là tin nhắn nè 123"/>
+        android:text="Đây là tin nhắn nè 123"
+        android:layout_marginBottom="24dp"/>
 </LinearLayout>
