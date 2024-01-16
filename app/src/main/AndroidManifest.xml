@@ -16,6 +16,7 @@
         android:theme="@style/Theme.Careyourlove"
         tools:targetApi="31">
 
+
         <activity
             android:name=".ChatActivity"
             android:exported="true">
