@@ -15,6 +15,15 @@
 
 
         <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PostDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false"></activity>
 
