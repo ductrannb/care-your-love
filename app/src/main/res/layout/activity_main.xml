@@ -27,7 +27,7 @@
             android:paddingBottom="45dp"
             android:paddingTop="5dp"/>
         <Button
-            android:id="@+id/home_link_create_post"
+            android:id="@+id/link_create_post"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:drawableLeft="@drawable/icon_add_post"

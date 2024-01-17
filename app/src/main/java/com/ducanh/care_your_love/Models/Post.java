@@ -15,6 +15,7 @@ public class Post {
     public String image;
     public String created_at;
     public List<Comment> comments;
+    private static final String REFERENCE_NAME  = "posts";
 
     public Post(String user_uuid, String title, String content, String image, @Nullable List<Comment> comments) {
         this.uuid = Common.generateUUID();
