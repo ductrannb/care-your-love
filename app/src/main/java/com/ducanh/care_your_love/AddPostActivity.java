@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -24,7 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ducanh.care_your_love.Models.Post;
 import com.ducanh.care_your_love.commons.Store;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -42,6 +46,8 @@ public class AddPostActivity extends AppCompatActivity {
     private EditText inputTitle;
     private EditText inputContent;
     private Button btnPost;
+    private boolean isEdit;
+    private Post postEdit;
     final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("posts");
     final private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     @Override
@@ -58,17 +64,28 @@ public class AddPostActivity extends AppCompatActivity {
         //Tạo underline cho textview quay lại
         linkBack.setPaintFlags(linkBack.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
+        // Lấy uuid từ intent truyền sang
+        Intent intent = getIntent();
+        String postUUID = intent.getStringExtra("postUUID");
+//        String postUUID = "174d1d42-aaad-4e70-add1-8ab89818d6a2";
 
+        if (postUUID == null || postUUID.isEmpty()) {
+            isEdit = false;
+        } else {
+            isEdit = true;
+            getPostEdit(postUUID);
+        }
+
+        // xử lý chọn ảnh từ thiết bị và hiển thị lên imageview
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
+                        if (result.getResultCode() == Activity.RESULT_OK) { // kết quả là result ok lấy dl từ intent trả về: là uri của hình ảnh bằng các gọi result.getdata
                             Intent data = result.getData();
-                            imageUri = data.getData();
-//                            imageButton.setImageURI(imageUri);
-                            uploadImage.setImageURI(imageUri);
+                            imageUri = data.getData(); // gán uri cho image uri
+                            uploadImage.setImageURI(imageUri);// hiển thị hình ảnh lên imageview
                         } else {
                             Toast.makeText(AddPostActivity.this, "Bạn chưa tải ảnh lên", Toast.LENGTH_SHORT).show();
                         }
@@ -90,15 +107,43 @@ public class AddPostActivity extends AppCompatActivity {
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (imageUri != null) {
-                    uploadToFirebase(imageUri);
+                String title = inputTitle.getText().toString();
+                String content = inputContent.getText().toString();
+                if (title.isEmpty() && content.isEmpty()) {
+                    Toast.makeText(AddPostActivity.this, "Vui lòng nhập tiêu đề và nội dung", Toast.LENGTH_SHORT).show();
+                } else if (title.isEmpty()) {
+                    Toast.makeText(AddPostActivity.this, "Vui lòng nhập tiêu đề", Toast.LENGTH_SHORT).show();
+                } else if (content.isEmpty()) {
+                    Toast.makeText(AddPostActivity.this, "Vui lòng nhập nội dung", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(AddPostActivity.this, "Bạn chưa chọn ảnh", Toast.LENGTH_SHORT ).show();
+                    if (imageUri != null) {
+                        uploadToFirebase(imageUri);
+                    } else {
+                        Toast.makeText(AddPostActivity.this, "Bạn chưa nhập hình ảnh", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
     }
 
+    private void getPostEdit(String uuid) {
+        databaseReference.child(uuid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    postEdit = task.getResult().getValue(Post.class);
+                    fillData();
+                } else {
+                    Log.e("GetPostEdit", task.getException().getMessage(), task.getException());
+                }
+            }
+        });
+    }
+
+    private void fillData() {
+        inputTitle.setText(postEdit.title);
+        inputContent.setText(postEdit.content);
+    }
     //outside onCreate
     private void uploadToFirebase(Uri uri) {
         String title = inputTitle.getText().toString();
@@ -112,7 +157,7 @@ public class AddPostActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         Post post = new Post(Store.userLogin.uuid, title, content, uri.toString(), null);
-                        databaseReference.child(post.uuid).setValue(post);
+                        databaseReference.child(post.uuid).setValue(post); //ghi dữ liệu
                         Toast.makeText(AddPostActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AddPostActivity.this, MainActivity.class);
                         startActivity(intent);
