@@ -20,6 +20,10 @@
             android:exported="false">
         </activity>
         <activity
+            android:name=".AddPostActivity"
+            android:exported="false">
+        </activity>
+        <activity
             android:name=".ChatActivity"
             android:exported="false">
 <!--            <intent-filter>-->

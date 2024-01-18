@@ -11,11 +11,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:padding="10dp"
         app:menu="@menu/default_toolbar"
         app:navigationIcon="@drawable/icon_back"
-        />
+        android:gravity="center"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,14 +27,15 @@
             android:paddingBottom="45dp"
             android:paddingTop="5dp"/>
         <Button
-            android:id="@+id/home_link_create_post"
+            android:id="@+id/link_create_post"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:drawableLeft="@drawable/icon_add_post"
             android:text="Tạo bài viết"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="40dp"
             android:backgroundTint="@color/main_color"/>
     </RelativeLayout>
 
