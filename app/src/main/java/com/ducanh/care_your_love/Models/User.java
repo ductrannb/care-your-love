@@ -4,6 +4,9 @@ import androidx.annotation.Nullable;
 
 import com.ducanh.care_your_love.commons.Common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
     public String uuid;
     public String username;
@@ -35,5 +38,32 @@ public class User {
         this.birthday = birthday;
         this.role = role;
         this.created_at = Common.getTimestampNow(); //lay thoi gian hien tai
+    }
+
+    public String getRoleName() {
+        switch (this.role) {
+            case ROLE_USER_NORMAL:
+                return "Người dùng";
+            case ROLE_CONSULTANT:
+                return "Chuyên gia";
+            case ROLE_ADMIN:
+                return "Admin";
+            default:
+                return "NONE";
+        }
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("uuid", uuid);
+        result.put("username", username);
+        result.put("password", password);
+        result.put("name", name);
+        result.put("email", email);
+        result.put("gender", gender);
+        result.put("birthday", birthday);
+        result.put("role", role);
+        result.put("created_at", created_at);
+        return result;
     }
 }
