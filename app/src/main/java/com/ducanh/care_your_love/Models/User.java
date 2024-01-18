@@ -36,4 +36,17 @@ public class User {
         this.role = role;
         this.created_at = Common.getTimestampNow(); //lay thoi gian hien tai
     }
+
+    public String getRoleName() {
+        switch (this.role) {
+            case ROLE_USER_NORMAL:
+                return "Người dùng";
+            case ROLE_CONSULTANT:
+                return "Chuyên gia";
+            case ROLE_ADMIN:
+                return "Admin";
+            default:
+                return "NONE";
+        }
+    }
 }
