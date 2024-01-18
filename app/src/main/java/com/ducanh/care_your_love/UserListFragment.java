@@ -69,7 +69,7 @@ public class UserListFragment extends Fragment {
             }
         });
 
-        adminListUserAdapter = new AdminListUserAdapter(listUsers);
+        adminListUserAdapter = new AdminListUserAdapter(listUsers, getContext());
 
         recyclerViewListUser = view.findViewById(R.id.rcv_admin_list_user);
         recyclerViewListUser.setLayoutManager(new LinearLayoutManager(getContext()));
