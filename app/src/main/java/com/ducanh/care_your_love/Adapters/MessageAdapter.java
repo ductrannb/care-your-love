@@ -48,13 +48,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             holder.message.setText(message.content);
             if (message.from_uuid.equals(Store.userLoggedInUUID)) {
                 holder.container.setPadding(paddingMsg, 0, 5, 0);
-                holder.message.setBackground(ContextCompat.getDrawable(chatActivity, R.drawable.self_message_border));
                 holder.message.setBackgroundResource(R.color.input_border);
                 holder.message.setTextColor(ContextCompat.getColor(chatActivity.getContext(), R.color.white));
             } else {
                 holder.container.setPadding(5, 0, paddingMsg, 0);
-                holder.message.setBackground(ContextCompat.getDrawable(chatActivity, R.drawable.partner_message_border));
-                holder.message.setBackgroundResource(R.color.white);
+                holder.message.setBackgroundResource(R.color.light_gray);
                 holder.message.setTextColor(ContextCompat.getColor(chatActivity.getContext(), R.color.black));
             }
         }
