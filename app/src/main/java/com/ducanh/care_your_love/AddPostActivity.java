@@ -21,8 +21,11 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ducanh.care_your_love.Models.Post;
 import com.ducanh.care_your_love.commons.Store;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,7 +43,7 @@ import java.net.URI;
 import java.util.ArrayList;
 
 public class AddPostActivity extends AppCompatActivity {
-    private TextView linkBack;
+    private TextView linkAddPost;
     private ImageView uploadImage;
     private Uri imageUri;
     private EditText inputTitle;
@@ -55,19 +58,26 @@ public class AddPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
 
-        linkBack = findViewById(R.id.link_back);
+        linkAddPost = findViewById(R.id.link_add_post);
         inputTitle = findViewById(R.id.input_title);
         inputContent = findViewById(R.id.input_content);
         uploadImage = findViewById(R.id.uploadImage);
         btnPost = findViewById(R.id.btn_post);
 
         //Tạo underline cho textview quay lại
-        linkBack.setPaintFlags(linkBack.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        linkAddPost.setPaintFlags(linkAddPost.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        // xu ly onclick link_add_post
+        linkAddPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddPostActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Lấy uuid từ intent truyền sang
-        Intent intent = getIntent();
-        String postUUID = intent.getStringExtra("postUUID");
-//        String postUUID = "174d1d42-aaad-4e70-add1-8ab89818d6a2";
+        String postUUID = getIntent().getStringExtra("postUUID");
 
         if (postUUID == null || postUUID.isEmpty()) {
             isEdit = false;
@@ -116,10 +126,16 @@ public class AddPostActivity extends AppCompatActivity {
                 } else if (content.isEmpty()) {
                     Toast.makeText(AddPostActivity.this, "Vui lòng nhập nội dung", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (imageUri != null) {
+                    if (postEdit != null) {
                         uploadToFirebase(imageUri);
                     } else {
-                        Toast.makeText(AddPostActivity.this, "Bạn chưa nhập hình ảnh", Toast.LENGTH_SHORT).show();
+                        // Xu ly them bai viet
+                        if (imageUri != null) {
+                            uploadToFirebase(imageUri);
+                        }
+                        else {
+                            Toast.makeText(AddPostActivity.this, "Bạn chưa nhập hình ảnh", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
@@ -143,29 +159,69 @@ public class AddPostActivity extends AppCompatActivity {
     private void fillData() {
         inputTitle.setText(postEdit.title);
         inputContent.setText(postEdit.content);
+        Glide.with(this).load(postEdit.image).into(uploadImage);
+        btnPost.setText("Sửa bài đăng");
     }
     //outside onCreate
-    private void uploadToFirebase(Uri uri) {
+    private void uploadToFirebase(@Nullable Uri uri) { // Nullable vi co the sua khong them anh
         String title = inputTitle.getText().toString();
         String content = inputContent.getText().toString();
-        final StorageReference imageReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
 
-        imageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        if (postEdit != null) {
+            if (uri != null) {
+                // Xu ly dang anh khi sua
+                StorageReference imageReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
+                imageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onSuccess(Uri uri) {
-                        Post post = new Post(Store.userLogin.uuid, title, content, uri.toString(), null);
-                        databaseReference.child(post.uuid).setValue(post); //ghi dữ liệu
-                        Toast.makeText(AddPostActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddPostActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                postEdit.image = uri.toString();
+                                // Sau khi tai ảnh mới thành công, update đường dẫn ảnh mới vào postedit
+                                postEdit.title = title;
+                                postEdit.content = content;
+                                databaseReference.child(postEdit.uuid).setValue(postEdit); //ghi dữ liệu
+
+                                Toast.makeText(AddPostActivity.this, "Cập nhật bài viết thành công", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(AddPostActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
                     }
                 });
+            } else {
+                // không có ảnh mới được tải lên, chỉ update title, content
+                postEdit.title = title;
+                postEdit.content = content;
+                databaseReference.child(postEdit.uuid).setValue(postEdit); //ghi dữ liệu
+                Toast.makeText(AddPostActivity.this, "Cập nhật bài viết thành công", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddPostActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
-        });
+
+        } else {
+            // Xu ly them bai viet moi
+            StorageReference imageReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
+            imageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Post post = new Post(Store.userLogin.uuid, title, content, uri.toString(), null);
+                            databaseReference.child(post.uuid).setValue(post); //ghi dữ liệu
+                            Toast.makeText(AddPostActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(AddPostActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            });
+        }
     }
     private String getFileExtension(Uri fileUri) {
         ContentResolver contentResolver = getContentResolver();

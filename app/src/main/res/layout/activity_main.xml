@@ -18,8 +18,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:padding="10dp"
+            android:layout_height="60dp"
             android:gravity="center"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -29,7 +28,8 @@
             android:paddingBottom="45dp"
             android:paddingTop="5dp"
             android:paddingLeft="8dp"
-            android:paddingRight="8dp"/>
+            android:paddingRight="8dp"
+            android:layout_below="@id/toolbar"/>
         <Button
             android:id="@+id/link_create_post"
             android:layout_width="wrap_content"

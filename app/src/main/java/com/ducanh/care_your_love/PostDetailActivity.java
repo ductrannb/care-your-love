@@ -1,10 +1,12 @@
 package com.ducanh.care_your_love;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -58,6 +60,9 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // xu ly dan toi trang edit
+                Intent intent = new Intent(PostDetailActivity.this, AddPostActivity.class);
+                intent.putExtra("postUUID", post.uuid);
+                startActivity(intent);
             }
         });
 
@@ -65,6 +70,28 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Xu ly xoa bai viet
+                AlertDialog.Builder builder = new AlertDialog.Builder(PostDetailActivity.this);
+                builder.setTitle("Xác nhận xóa");
+                builder.setMessage("Bạn có chắc chắn muốn xóa bài viết không?");
+                builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        databaseReference.child(post.uuid).removeValue(); // xoa bai viet khoi db
+                        Toast.makeText(PostDetailActivity.this, "Bài viết đã được xóa", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(PostDetailActivity.this,MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
