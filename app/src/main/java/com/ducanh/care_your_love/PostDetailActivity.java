@@ -99,7 +99,6 @@ public class PostDetailActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(PostDetailActivity.this,MainActivity.class);
                         startActivity(intent);
-                        finish();
                     }
                 });
                 builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {

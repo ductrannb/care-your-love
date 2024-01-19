@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
@@ -26,17 +27,24 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private EditText searchPost;
+    private Button btnSearch;
     private Button linkCreatePost;
     private TextView postConsultantName;
     RecyclerView rcvListPost;
     ArrayList<Post> dataList;
     PostAdapter adapter;
     final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Post.REFERENCE_NAME);
+    //lấy tên người dùng hiển thị ở nav_header
+    private TextView account;
 
     //Đổi mk
     private DrawerLayout drawerLayout;
@@ -47,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        searchPost = findViewById(R.id.search_post);
+        btnSearch = findViewById(R.id.btn_search);
         linkCreatePost = findViewById(R.id.link_create_post);
         rcvListPost = findViewById(R.id.rcv_list_post);
         rcvListPost.setHasFixedSize(true);
@@ -54,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dataList = new ArrayList<>();
         adapter = new PostAdapter(dataList, this);
         rcvListPost.setAdapter(adapter);
-        if (Store.userLogin.role == User.ROLE_USER_NORMAL) {
+        if (Store.userLogin == null || Store.userLogin.role == User.ROLE_USER_NORMAL) {
             //Ẩn nút đăng bài nếu người dùng thường đăng nhập
             linkCreatePost.setVisibility(View.INVISIBLE);
         }
@@ -72,6 +82,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             navigationView.setCheckedItem(R.id.nav_home);
         }
+
+        //xử lý onclick cho tìm kiếm, tìm kieesm theo title
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String keyword = searchPost.getText().toString();
+
+                Query query = databaseReference.orderByChild("title").startAt(keyword).endAt(keyword + "\uf8ff");
+                query.addValueEventListener(new ValueEventListener() {
+                    List<Post> postList = new ArrayList<>();
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                            Post post = dataSnapshot.getValue(Post.class); // chuyển dl về kiểu post
+                            postList.add(post);
+                        }
+                        adapter.setDataList(postList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
 
         //////
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -99,6 +135,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+
+        //xử lý hiển thị tên ng dùng trong nav_header
+        if (Store.userLogin != null) {
+            View headerView = navigationView.getHeaderView(0);
+            TextView navUsername = headerView.findViewById(R.id.account);
+            navUsername.setText(Store.userLogin.name);
+        }
 
         // xử lý sự kiện onCLick cho Tạo bài viết
         linkCreatePost.setOnClickListener(new View.OnClickListener() {

@@ -43,15 +43,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
         notifyDataSetChanged();
     }
 
+    // adapter đổ dl vào viewholder, view holder là hiển thị giao diện cho các item trong recycleview
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) { // tạo viewholder mới và trả về mó
         View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) { // liên kết dữ liệu twuf nguồn dl với viewholder
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(User.REFERENCE_NAME);
         Post post = dataList.get(position);
         databaseReference.child(post.user_uuid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
