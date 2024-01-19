@@ -18,6 +18,7 @@ import com.ducanh.care_your_love.Adapters.MessageAdapter;
 import com.ducanh.care_your_love.Models.Chat;
 import com.ducanh.care_your_love.Models.Message;
 import com.ducanh.care_your_love.Models.User;
+import com.ducanh.care_your_love.commons.Common;
 import com.ducanh.care_your_love.commons.Store;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,8 +29,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ChatActivity extends AppCompatActivity {
     private ImageButton btnBack;
@@ -78,6 +90,55 @@ public class ChatActivity extends AppCompatActivity {
         chat.messages.add(message);
         reference.child(chat.uuid).setValue(chat);
         inputMessage.setText("");
+        sendNotification(message);
+    }
+
+    void sendNotification(Message message) {
+        try {
+            JSONObject jsonObject  = new JSONObject();
+
+            JSONObject notificationObj = new JSONObject();
+            notificationObj.put("title", Store.userLogin.name);
+            notificationObj.put("body", message.content);
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("userUUID", Store.userLogin.uuid);
+
+            jsonObject.put("notification", notificationObj);
+            jsonObject.put("data", dataObj);
+            jsonObject.put("to", userPartner.fcmToken);
+
+            callApi(jsonObject);
+
+
+        } catch (Exception e){
+            Log.e("Send message", e.getMessage(), e);
+        }
+    }
+
+
+    void callApi(JSONObject jsonObject){
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://fcm.googleapis.com/fcm/send";
+        RequestBody body = RequestBody.create(jsonObject.toString(),JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .header("Authorization","Bearer AAAA9Hf-goM:APA91bFNSNz0bxtR6qy3BTVDT0E7I-iPPdXG-8i33UFb7Un0Sm3fSmID9rUvudfZZ6MAf-neHAQm7usSRVw5Gq5_enCA1H9_ccehtGoPO7T2tk1i2AEdioeAPzdeuW6LZ-oFcYtHGBHs")
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+            }
+        });
+
     }
 
     public void getChat(String partnerUUID) {

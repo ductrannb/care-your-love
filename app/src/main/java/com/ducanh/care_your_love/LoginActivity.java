@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ducanh.care_your_love.Models.User;
+import com.ducanh.care_your_love.commons.Common;
 import com.ducanh.care_your_love.commons.Store;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -90,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else if (Store.userLogin.role == User.ROLE_ADMIN) {
                         startActivity(new Intent(LoginActivity.this, AdminActivity.class));
                     }
+                    Common.setFcmToken();
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!",Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();

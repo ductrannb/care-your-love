@@ -17,6 +17,7 @@ public class User {
     public String birthday;
     public int role;
     public String created_at;
+    public String fcmToken;
 
     public static final String REFERENCE_NAME = "users"; //ten bang
 
