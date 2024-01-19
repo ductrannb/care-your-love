@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String keyword = searchPost.getText().toString();
 
                 Query query = databaseReference.orderByChild("title").startAt(keyword).endAt(keyword + "\uf8ff");
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Post post = dataSnapshot.getValue(Post.class); // chuyển dl về kiểu post
                             postList.add(post);
                         }
-                        adapter.setDataList(postList);
+                        adapter.setDataList(postList);//cập nhật giao diện hiển thị dsach bai viet tim dc
                     }
 
                     @Override

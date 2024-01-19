@@ -13,7 +13,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_app"
@@ -36,29 +37,27 @@
        <LinearLayout
            android:id="@+id/box_search"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content"
+           android:layout_height="40dp"
            android:layout_below="@id/toolbar"
-           >
+           android:layout_marginBottom="10dp">
 
            <EditText
                android:id="@+id/search_post"
-               android:layout_width="270dp"
-               android:layout_height="35dp"
+               android:layout_width="250dp"
+               android:layout_height="match_parent"
                android:background="@drawable/input_border"
                android:layout_marginLeft="12dp"
+               android:padding="10dp"
                android:drawableLeft="@drawable/icon_search"
-               android:drawablePadding="8dp"
-               android:hint="Tìm kiếm"
-               android:layout_marginBottom="5dp"
-               />
+               android:hint="Tìm kiếm"/>
 
            <Button
                android:id="@+id/btn_search"
                android:layout_width="110dp"
-               android:layout_height="35dp"
+               android:layout_height="match_parent"
                android:text = "Tìm kiếm"
                android:layout_marginLeft="5dp"
-               android:layout_marginRight="12dp"
+               android:layout_marginRight="100dp"
                android:backgroundTint="@color/main_color"/>
        </LinearLayout>
 
