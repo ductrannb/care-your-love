@@ -72,7 +72,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Post post = dataSnapshot.getValue(Post.class);
-                    dataList.add(post);
+                    boolean isExist = false;
+                    for (int i=0; i<dataList.size(); i++) {
+                        if (dataList.get(i).uuid.equals(post.uuid)) {
+                            dataList.set(i, post);
+                            isExist = true;
+                            break;
+                        }
+                    }
+                    if (!isExist) {
+                        dataList.add(post);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
