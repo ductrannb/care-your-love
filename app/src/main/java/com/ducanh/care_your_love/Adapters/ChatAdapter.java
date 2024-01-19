@@ -1,14 +1,17 @@
 package com.ducanh.care_your_love.Adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ducanh.care_your_love.ChatActivity;
 import com.ducanh.care_your_love.Models.Chat;
 import com.ducanh.care_your_love.Models.User;
 import com.ducanh.care_your_love.R;
@@ -45,7 +48,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHoder>
     public void onBindViewHolder(@NonNull ChatViewHoder holder, int position) {
         Chat chat = chats.get(position);
         if (chat != null) {
-            String chatUserUUID = Store.userLogin.uuid.equals(chat.user_uuid) ? chat.user_uuid : chat.consultant_uuid;
+            String chatUserUUID = Store.userLogin.uuid.equals(chat.user_uuid) ? chat.consultant_uuid : chat.user_uuid;
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(User.REFERENCE_NAME);
             databaseReference.child(chatUserUUID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
@@ -55,7 +58,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHoder>
                     }
                 }
             });
-            holder.chatLatestMessage.setText(chat.messages.get(chat.messages.size()-1).content);
+            holder.chatLatestMessage.setText((chat.messages != null && chat.messages.size() > 0) ? chat.messages.get(chat.messages.size()-1).content : "");
+            holder.chatContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity, ChatActivity.class);
+                    intent.putExtra("partnerUUID", chatUserUUID);
+                    activity.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -67,10 +78,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHoder>
     public class ChatViewHoder extends RecyclerView.ViewHolder {
         private TextView chatName;
         private TextView chatLatestMessage;
+        private CardView chatContainer;
         public ChatViewHoder(@NonNull View itemView) {
             super(itemView);
             chatName = itemView.findViewById(R.id.chat_name);
             chatLatestMessage = itemView.findViewById(R.id.chat_latest_message);
+            chatContainer = itemView.findViewById(R.id.chat_container);
         }
     }
 }
