@@ -31,6 +31,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 String keyword = searchPost.getText().toString();
 
-                Query query = databaseReference.orderByChild("title").startAt(keyword).endAt(keyword + "\uf8ff");
+                Query query = databaseReference.orderByChild("created_at").orderByChild("title").startAt(keyword).endAt(keyword + "\uf8ff");
                 query.addValueEventListener(new ValueEventListener() {
                     List<Post> postList = new ArrayList<>();
                     @Override
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         //////
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.orderByChild("created_at").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
@@ -128,7 +130,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         dataList.add(post);
                     }
                 }
-                adapter.notifyDataSetChanged();
+                Collections.reverse(dataList);
+                adapter.setDataList(dataList);
             }
 
             @Override
