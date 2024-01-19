@@ -14,15 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:paddingBottom="12dp"
         android:background="@drawable/border_bottom"
         >
         <ImageButton
+            android:id="@+id/btn_back_to_home"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/icon_back"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/none"
             android:layout_gravity="start"/>
         
         <Space
@@ -31,43 +31,79 @@
             android:layout_weight="5"/>
 
         <ImageButton
+            android:id="@+id/btn_edit_post"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/icon_threedot"
-            android:backgroundTint="@color/white"
-            android:layout_gravity="end"/>
+            android:src="@drawable/icon_edit"
+            android:backgroundTint="@color/none"
+            android:layout_gravity="end"
+            android:visibility="invisible"/>
+        <ImageButton
+            android:id="@+id/btn_delete_post"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/icon_delete"
+            android:backgroundTint="@color/none"
+            android:layout_gravity="end"
+            android:visibility="invisible"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/post_detail_content"
+    <ScrollView
+        android:id="@+id/post_detail_content_wrapper"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:orientation="vertical"
         android:layout_below="@+id/post_detail_header_container"
-        android:padding="12dp">
+        android:layout_marginBottom="12dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/post_detail_header_container"
+            android:padding="12dp">
 
-        <TextView
-            android:id="@+id/post_detail_consultant_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="16dp"
-            android:text="Trần Văn A"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="11dp"
-            android:text="Nội dung bài viết"/>
-        
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/default_thumbnail"/>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/post_detail_consultant_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:text="Trần Văn A"/>
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/post_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="11dp"
+                android:text="Nội dung bài viết"/>
+
+            <ImageView
+                android:id="@+id/post_detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/default_thumbnail"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/label_no_comment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/post_detail_content_wrapper"
+        android:text="Không có bình luận nào"
+        android:textAlignment="center"
+        android:visibility="invisible">
+    </TextView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/post_detail_comment_list"
@@ -76,7 +112,7 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:paddingBottom="40dp"
-        android:layout_below="@+id/post_detail_content"/>
+        android:layout_below="@+id/post_detail_content_wrapper"/>
 
 
     <LinearLayout
@@ -92,19 +128,22 @@
         <EditText
             android:id="@+id/input_content_comment"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="5"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:textSize="11dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="16dp"
             android:hint="Nhập bình luân"
             android:background="@drawable/input_border"
             />
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_send_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/none"
             android:src="@drawable/icon_send"/>
     </LinearLayout>
 </RelativeLayout>
