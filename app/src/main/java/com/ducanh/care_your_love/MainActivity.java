@@ -114,7 +114,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_change_password:
                 startActivity(new Intent(MainActivity.this, ChangePasswordActivity.class));
                 break;
-
+            case R.id.nav_list_chat:
+                startActivity(new Intent(MainActivity.this, ListChatActivity.class));
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
