@@ -18,14 +18,22 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.ducanh.care_your_love.Adapters.CommentAdapter;
+import com.ducanh.care_your_love.Adapters.CommentReplyAdapter;
+import com.ducanh.care_your_love.Models.Comment;
+import com.ducanh.care_your_love.Models.CommentReply;
 import com.ducanh.care_your_love.Models.Post;
 import com.ducanh.care_your_love.Models.User;
+import com.ducanh.care_your_love.commons.Common;
 import com.ducanh.care_your_love.commons.Store;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class PostDetailActivity extends AppCompatActivity {
     private Post post;
@@ -47,6 +55,8 @@ public class PostDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
         initUI();
+        commentAdapter = new CommentAdapter(PostDetailActivity.this, null);
+        commentAdapter.unReplyComment();
         databaseReference = FirebaseDatabase.getInstance().getReference(Post.REFERENCE_NAME);
         getData();
         btnBackToHome.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +104,47 @@ public class PostDetailActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        btnSendComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String content = inputContentComment.getText().toString().trim();
+                if (!content.isEmpty()) {
+                    if (commentAdapter.isIsReply()) {
+                        CommentReply commentReply = new CommentReply(Store.userLogin.uuid, content);
+                        replyComment(commentAdapter.getCommentReplying(), commentReply);
+                    } else {
+                        Comment comment = new Comment(Store.userLogin.uuid, content, null);
+                        sendComment(comment);
+                    }
+                }
+            }
+        });
+    }
+
+    public void replyComment(Comment comment, CommentReply commentReply) {
+        int index = post.comments.indexOf(comment);
+        if (comment.replies == null) {
+            comment.replies = new ArrayList<>();
+        }
+        comment.replies.add(commentReply);
+        post.comments.set(index, comment);
+        databaseReference.child(post.uuid).setValue(post);
+        inputContentComment.setText("");
+        postDetailListComment.scrollToPosition(index);
+        commentAdapter.unReplyComment();
+        Common.hideKeyboard(PostDetailActivity.this);
+    }
+
+    public void sendComment(Comment comment) {
+        if (post.comments == null) {
+            post.comments = new ArrayList<>();
+        }
+        post.comments.add(comment);
+        databaseReference.child(post.uuid).setValue(post);
+        inputContentComment.setText("");
+        postDetailListComment.scrollToPosition(commentAdapter.getItemCount() - 1);
+        Common.hideKeyboard(PostDetailActivity.this);
     }
 
     public void getData() {
@@ -110,6 +161,19 @@ public class PostDetailActivity extends AppCompatActivity {
                     }
                 }
             });
+            databaseReference.child(postUUID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Post postOnChange = snapshot.getValue(Post.class);
+                    post.comments = postOnChange.comments;
+                    commentAdapter.setComments(post.comments);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
 
@@ -122,10 +186,10 @@ public class PostDetailActivity extends AppCompatActivity {
                     postDetailConsultantName.setText(task.getResult().getValue(User.class).name);
                     postDetailContent.setText(post.content);
                     Glide.with(PostDetailActivity.this).load(post.image).into(postDetailImage);
-                    commentAdapter = new CommentAdapter(PostDetailActivity.this, post.comments);
+                    commentAdapter.setComments(post.comments);
                     postDetailListComment.setLayoutManager(new LinearLayoutManager(PostDetailActivity.this));
                     postDetailListComment.setAdapter(commentAdapter);
-                    if (post.user_uuid.equals(Store.userLogin.uuid)) {
+                    if (Store.userLogin != null && post.user_uuid.equals(Store.userLogin.uuid)) {
                         btnEditPost.setVisibility(View.VISIBLE);
                         btnDeletePost.setVisibility(View.VISIBLE);
                     }
