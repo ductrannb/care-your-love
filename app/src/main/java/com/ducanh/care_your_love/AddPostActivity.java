@@ -44,7 +44,8 @@ import java.util.ArrayList;
 
 public class AddPostActivity extends AppCompatActivity {
     private TextView linkAddPost;
-    private ImageView uploadImage;
+    private ImageButton uploadImage;
+    private ImageView imageView;
     private Uri imageUri;
     private EditText inputTitle;
     private EditText inputContent;
@@ -62,6 +63,7 @@ public class AddPostActivity extends AppCompatActivity {
         inputTitle = findViewById(R.id.input_title);
         inputContent = findViewById(R.id.input_content);
         uploadImage = findViewById(R.id.uploadImage);
+        imageView = findViewById(R.id.image_view);
         btnPost = findViewById(R.id.btn_post);
 
         //Tạo underline cho textview quay lại
@@ -95,7 +97,7 @@ public class AddPostActivity extends AppCompatActivity {
                         if (result.getResultCode() == Activity.RESULT_OK) { // kết quả là result ok lấy dl từ intent trả về: là uri của hình ảnh bằng các gọi result.getdata
                             Intent data = result.getData();
                             imageUri = data.getData(); // gán uri cho image uri
-                            uploadImage.setImageURI(imageUri);// hiển thị hình ảnh lên imageview
+                            imageView.setImageURI(imageUri);// hiển thị hình ảnh lên imageview
                         } else {
                             Toast.makeText(AddPostActivity.this, "Bạn chưa tải ảnh lên", Toast.LENGTH_SHORT).show();
                         }
@@ -159,7 +161,7 @@ public class AddPostActivity extends AppCompatActivity {
     private void fillData() {
         inputTitle.setText(postEdit.title);
         inputContent.setText(postEdit.content);
-        Glide.with(this).load(postEdit.image).into(uploadImage);
+        Glide.with(this).load(postEdit.image).into(imageView);
         btnPost.setText("Sửa bài đăng");
     }
     //outside onCreate
