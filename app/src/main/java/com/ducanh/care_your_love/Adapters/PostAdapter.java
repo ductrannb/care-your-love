@@ -70,6 +70,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
                 context.startActivity(intent);
             }
         });
+        holder.labelCountComment.setText("(" + post.countComments() + ")");
     }
 
     @Override
@@ -84,6 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
         TextView postContent;
         ImageView postImage;
         CardView postContainer;
+        TextView labelCountComment;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -92,6 +94,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             postContent = itemView.findViewById(R.id.post_content);
             postImage = itemView.findViewById(R.id.post_image);
             postContainer = itemView.findViewById(R.id.post_container);
+            labelCountComment = itemView.findViewById(R.id.label_count_comment);
         }
     }
 }

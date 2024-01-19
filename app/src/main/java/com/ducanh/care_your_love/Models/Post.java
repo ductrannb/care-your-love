@@ -28,4 +28,15 @@ public class Post {
         this.comments = comments != null ? comments : new ArrayList<>();
         this.created_at = Common.getTimestampNow();
     }
+
+    public int countComments() {
+        if (comments == null) {
+            return 0;
+        }
+        int count = 0;
+        for (Comment comment : comments) {
+            count += comment.replies != null ? comment.replies.size() : 0;
+        }
+        return comments.size() + count;
+    }
 }
