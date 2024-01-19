@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rcvListPost;
     ArrayList<Post> dataList;
     PostAdapter adapter;
-    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("posts");
+    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Post.REFERENCE_NAME);
 
 
     @Override
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         linkCreatePost = findViewById(R.id.link_create_post);
-        postConsultantName = findViewById(R.id.post_consultant_name);
         rcvListPost = findViewById(R.id.rcv_list_post);
         rcvListPost.setHasFixedSize(true);
         rcvListPost.setLayoutManager(new LinearLayoutManager(this));

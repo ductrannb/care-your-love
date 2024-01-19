@@ -15,7 +15,7 @@ public class Post {
     public String image;
     public String created_at;
     public List<Comment> comments;
-    private static final String REFERENCE_NAME  = "posts";
+    public static final String REFERENCE_NAME  = "posts";
 
     public Post() {}
 
