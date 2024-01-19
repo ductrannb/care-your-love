@@ -88,7 +88,7 @@
                         <RadioButton
                             android:id="@+id/radio_btn_user_normal"
                             android:layout_width="0dp"
-                            android:layout_height="25dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Người dùng"
                             android:layout_marginLeft="10dp"
@@ -98,7 +98,7 @@
                         <RadioButton
                             android:id="@+id/radio_btn_user_consultant"
                             android:layout_width="0dp"
-                            android:layout_height="25dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Chuyên gia"
                             android:layout_marginLeft="20dp"

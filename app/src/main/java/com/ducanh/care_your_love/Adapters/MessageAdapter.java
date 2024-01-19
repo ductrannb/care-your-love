@@ -16,6 +16,7 @@ import com.ducanh.care_your_love.Models.Message;
 import com.ducanh.care_your_love.R;
 import com.ducanh.care_your_love.commons.Store;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder>{
@@ -29,6 +30,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     public void newMessage(Message message) {
+        if (this.messages == null) {
+            this.messages = new ArrayList<>();
+        }
         this.messages.add(message);
         notifyDataSetChanged();
     }
@@ -46,7 +50,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         if (message != null) {
             int paddingMsg = 200;
             holder.message.setText(message.content);
-            if (message.from_uuid.equals(Store.userLoggedInUUID)) {
+            if (message.from_uuid.equals(Store.userLogin.uuid)) {
                 holder.container.setPadding(paddingMsg, 0, 5, 0);
                 holder.message.setBackgroundResource(R.color.input_border);
                 holder.message.setTextColor(ContextCompat.getColor(chatActivity.getContext(), R.color.white));
