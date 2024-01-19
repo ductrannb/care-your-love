@@ -52,7 +52,7 @@ public class ListChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Chat chat = dataSnapshot.getValue(Chat.class);
-                    if (Store.userLogin.uuid.equals(chat.user_uuid) || Store.userLogin.uuid.equals(chat.consultant_uuid)) {
+                    if (chat != null && (Store.userLogin.uuid.equals(chat.user_uuid) || Store.userLogin.uuid.equals(chat.consultant_uuid))) {
                         boolean isExist = false;
                         for (int i=0; i<chats.size(); i++) {
                             if (chats.get(i).uuid.equals(chat.uuid)) {

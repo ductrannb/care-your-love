@@ -42,6 +42,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private ImageButton btnDeletePost;
     private TextView postDetailConsultantName;
     private TextView postDetailContent;
+    private TextView postDetailTitle;
     private ImageView postDetailImage;
     private RecyclerView postDetailListComment;
     private EditText inputContentComment;
@@ -172,8 +173,10 @@ public class PostDetailActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Post postOnChange = snapshot.getValue(Post.class);
-                    post.comments = postOnChange.comments;
-                    commentAdapter.setComments(post.comments);
+                    if (post != null) {
+                        post.comments = postOnChange.comments;
+                        commentAdapter.setComments(post.comments);
+                    }
                 }
 
                 @Override
@@ -192,6 +195,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     postDetailConsultantName.setText(task.getResult().getValue(User.class).name);
                     postDetailContent.setText(post.content);
+                    postDetailTitle.setText("Tiêu đề: " + post.title);
                     Glide.with(PostDetailActivity.this).load(post.image).into(postDetailImage);
                     commentAdapter.setComments(post.comments);
                     postDetailListComment.setLayoutManager(new LinearLayoutManager(PostDetailActivity.this));
@@ -213,11 +217,13 @@ public class PostDetailActivity extends AppCompatActivity {
         btnEditPost = findViewById(R.id.btn_edit_post);
         btnDeletePost = findViewById(R.id.btn_delete_post);
         postDetailConsultantName = findViewById(R.id.post_detail_consultant_name);
+        postDetailTitle = findViewById(R.id.post_detail_title);
         postDetailContent = findViewById(R.id.post_detail_content);
         postDetailImage = findViewById(R.id.post_detail_image);
         postDetailListComment = findViewById(R.id.post_detail_comment_list);
         inputContentComment = findViewById(R.id.input_content_comment);
         btnSendComment = findViewById(R.id.btn_send_comment);
         labelNoComment = findViewById(R.id.label_no_comment);
+        inputContentComment.requestFocus();
     }
 }
