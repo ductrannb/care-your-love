@@ -14,6 +14,8 @@ public class Comment {
     public List<Comment> replies;
     public String created_at;
 
+    public Comment () {}
+
     public Comment(String user_uuid, String content, @Nullable List<Comment> replies) {
         this.uuid = Common.generateUUID();
         this.user_uuid = user_uuid;
