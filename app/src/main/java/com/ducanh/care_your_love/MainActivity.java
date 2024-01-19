@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView rcvListPost;
     ArrayList<Post> dataList;
     PostAdapter adapter;
-    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("posts");
+    final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Post.REFERENCE_NAME);
 
     //Đổi mk
     private DrawerLayout drawerLayout;
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         linkCreatePost = findViewById(R.id.link_create_post);
-//        postConsultantName = findViewById(R.id.post_consultant_name); // Cai j day em cái này là hiển thị bài viết í ạ
         rcvListPost = findViewById(R.id.rcv_list_post);
         rcvListPost.setHasFixedSize(true);
         rcvListPost.setLayoutManager(new LinearLayoutManager(this));
