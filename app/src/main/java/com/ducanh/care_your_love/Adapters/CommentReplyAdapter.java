@@ -26,50 +26,33 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder>{
-    private List<Comment> comments;
+public class CommentReplyAdapter extends RecyclerView.Adapter<CommentReplyAdapter.CommentReplyViewHolder>{
     private List<CommentReply> commentReplies;
     private Context context;
-    public static boolean isReply = false;
-    public static Comment commentReplying;
 
-    public CommentAdapter(Context context, @Nullable List<Comment> comments) {
-        this.comments = comments;
+    public CommentReplyAdapter(Context context, @Nullable List<CommentReply> commentReplies) {
         this.context = context;
         this.commentReplies = commentReplies;
     }
 
-    public void setComments(@Nullable List<Comment> comments) {
-        this.comments = comments;
+    public void setComments(@Nullable List<CommentReply> commentReplies) {
+        this.commentReplies = commentReplies;
         notifyDataSetChanged();
-    }
-
-    public void unReplyComment() {
-        isReply = false;
-        commentReplying = null;
-    }
-
-    public boolean isIsReply() {
-        return isReply;
-    }
-
-    public Comment getCommentReplying() {
-        return commentReplying;
     }
 
     @NonNull
     @Override
-    public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CommentReplyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent,false);
-        return new CommentViewHolder(view);
+        return new CommentReplyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
-        Comment comment = comments.get(position);
-        if (comment != null) {
+    public void onBindViewHolder(@NonNull CommentReplyViewHolder holder, int position) {
+        CommentReply commentReply = commentReplies.get(position);
+        if (commentReply != null) {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference(User.REFERENCE_NAME);
-            reference.child(comment.user_uuid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            reference.child(commentReply.user_uuid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -79,36 +62,24 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
                     }
                 }
             });
-            holder.commentContent.setText(comment.content);
-
-            CommentReplyAdapter commentReplyAdapter = new CommentReplyAdapter(context, comment.replies);
-            holder.commentReplyList.setLayoutManager(new LinearLayoutManager(context));
-            holder.commentReplyList.setAdapter(commentReplyAdapter);
-
-            holder.btnReplyComment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.commentContent.requestFocus();
-                    Common.openKeyboard((Activity)context);
-                    commentReplying = comment;
-                    isReply = true;
-                }
-            });
+            holder.commentContent.setText(commentReply.content);
+            holder.commentReplyList.setVisibility(View.INVISIBLE);
+            holder.btnReplyComment.setVisibility(View.INVISIBLE);
         }
     }
 
     @Override
     public int getItemCount() {
-        return comments != null ? comments.size() : 0;
+        return commentReplies != null ? commentReplies.size() : 0;
     }
 
-    public class CommentViewHolder extends RecyclerView.ViewHolder{
+    public class CommentReplyViewHolder extends RecyclerView.ViewHolder{
         private TextView commentName;
         private TextView commentContent;
         private RecyclerView commentReplyList;
         private TextView btnReplyComment;
 
-        public CommentViewHolder(@NonNull View itemView) {
+        public CommentReplyViewHolder(@NonNull View itemView) {
             super(itemView);
             commentName = itemView.findViewById(R.id.comment_name);
             commentContent = itemView.findViewById(R.id.comment_content);
