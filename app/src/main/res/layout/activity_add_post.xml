@@ -41,26 +41,36 @@
                 android:drawablePadding="12dp"
                 android:gravity="top"
                 android:hint="Nội dung"/>
-            <LinearLayout
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="125dp"
+                android:layout_height="120dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginTop="10dp"
                 android:gravity="start">
-                <ImageView
+
+                <ImageButton
                     android:id="@+id/uploadImage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:background="@color/none"
-                    android:src="@drawable/icon_add_image"/>
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="23dp"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="15dp"
-                    android:text="Hình ảnh"/>
-            </LinearLayout>
+                    android:src="@drawable/icon_add_image"
+                    android:scaleType="centerCrop"/>
+
+                <ImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/none"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center"/>
+
+            </androidx.cardview.widget.CardView>
 
             <Button
                 android:id="@+id/btn_post"
