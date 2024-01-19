@@ -65,7 +65,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             }
         });
 
-        holder.postTitle.setText(dataList.get(position).title);
+        holder.postTitle.setText("Tiêu đề: " + dataList.get(position).title);
         holder.postContent.setText(dataList.get(position).content);
         Glide.with(context).load(dataList.get(position).image).into(holder.postImage);
         holder.postContainer.setOnClickListener(new View.OnClickListener() {

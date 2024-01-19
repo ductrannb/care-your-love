@@ -53,7 +53,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHoder>
             databaseReference.child(chatUserUUID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (task.isSuccessful()) {
+                    if (task.isSuccessful() && task.getResult().getValue(User.class) != null) {
                         holder.chatName.setText(task.getResult().getValue(User.class).name);
                     }
                 }
