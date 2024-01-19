@@ -43,6 +43,7 @@ import java.net.URI;
 import java.util.ArrayList;
 
 public class AddPostActivity extends AppCompatActivity {
+    // khai báo Textview, imageview ....
     private TextView linkAddPost;
     private ImageButton uploadImage;
     private ImageView imageView;
@@ -52,12 +53,16 @@ public class AddPostActivity extends AppCompatActivity {
     private Button btnPost;
     private boolean isEdit;
     private Post postEdit;
+    // lấy dl từ firebase qua posts trong model Post
     final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("posts");
+
+    // lấy ảnh từ firebase
     final private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
+        // ánh xạ từ layout sang
 
         linkAddPost = findViewById(R.id.link_add_post);
         inputTitle = findViewById(R.id.input_title);
@@ -69,7 +74,7 @@ public class AddPostActivity extends AppCompatActivity {
         //Tạo underline cho textview quay lại
         linkAddPost.setPaintFlags(linkAddPost.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        // xu ly onclick link_add_post
+        // xu ly onclick link_add_post, khi click vào chuyển sang màn MainActivity
         linkAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,23 +83,24 @@ public class AddPostActivity extends AppCompatActivity {
             }
         });
 
-        // Lấy uuid từ intent truyền sang
+        // Lấy uuid từ intent (PostDetaliActivity) truyền sang
         String postUUID = getIntent().getStringExtra("postUUID");
 
+        // kiểm tra là màn sửa hay tạo
         if (postUUID == null || postUUID.isEmpty()) {
             isEdit = false;
         } else {
             isEdit = true;
-            getPostEdit(postUUID);
+            getPostEdit(postUUID); // là màn sửa thì gọi đến getPostEdit
         }
 
         // xử lý chọn ảnh từ thiết bị và hiển thị lên imageview
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult( //ActivityResultLauncher đc dùng để chọn và nhận ảnh từ ng dùng
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
+                new ActivityResultCallback<ActivityResult>() { // xử lý kết quả trả về
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) { // kết quả là result ok lấy dl từ intent trả về: là uri của hình ảnh bằng các gọi result.getdata
+                        if (result.getResultCode() == Activity.RESULT_OK) { // kết quả là result ok lấy dl từ intent trả về: là uri của hình ảnh bằng cách gọi result.getdata
                             Intent data = result.getData();
                             imageUri = data.getData(); // gán uri cho image uri
                             imageView.setImageURI(imageUri);// hiển thị hình ảnh lên imageview
@@ -144,13 +150,15 @@ public class AddPostActivity extends AppCompatActivity {
         });
     }
 
+    //lấy thông tin bài viết qua uuid
     private void getPostEdit(String uuid) {
+        // lấy thông tin bài viết từ firebase về qua uuid
         databaseReference.child(uuid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
+                if (task.isSuccessful()) { // thành công thì gán kết quả = postEdit
                     postEdit = task.getResult().getValue(Post.class);
-                    fillData();
+                    fillData();// lấy thông tin thành công thù dùng filldata để đổ dữ liệu ra edittext title, content, và imageview từ dùng 170
                 } else {
                     Log.e("GetPostEdit", task.getException().getMessage(), task.getException());
                 }
@@ -158,50 +166,50 @@ public class AddPostActivity extends AppCompatActivity {
         });
     }
 
+    //sau khi lấy thông tin thì dùng fill data đổ dữ liệu vào giao diện tương ứng
     private void fillData() {
         inputTitle.setText(postEdit.title);
         inputContent.setText(postEdit.content);
-        Glide.with(this).load(postEdit.image).into(imageView);
-        btnPost.setText("Sửa bài đăng");
+        Glide.with(this).load(postEdit.image).into(imageView); //glide hiển thị ảnh
+        btnPost.setText("Sửa bài đăng"); // btnPost dc settext thành sửa bài đăng khi click btnPost sẽ xử lý tiếp ở dòng 125
     }
     //outside onCreate
     private void uploadToFirebase(@Nullable Uri uri) { // Nullable vi co the sua khong them anh
-        String title = inputTitle.getText().toString();
+        String title = inputTitle.getText().toString(); // lay  edittext
         String content = inputContent.getText().toString();
 
         if (postEdit != null) {
-            if (uri != null) {
+            if (uri != null) { // sửa aảnh mới
                 // Xu ly dang anh khi sua
-                StorageReference imageReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
-                imageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                StorageReference imageReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri)); //System.currentTimeMillis() + "." + getFileExtension(uri): đtặ cái tên cho anh theo thời gian
+                imageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {//putFile là firebase
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        // xu ly upload image thành công
+                        imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() { // lấy linnk ảnh
                             @Override
                             public void onSuccess(Uri uri) {
                                 postEdit.image = uri.toString();
                                 // Sau khi tai ảnh mới thành công, update đường dẫn ảnh mới vào postedit
                                 postEdit.title = title;
                                 postEdit.content = content;
-                                databaseReference.child(postEdit.uuid).setValue(postEdit); //ghi dữ liệu
+                                databaseReference.child(postEdit.uuid).setValue(postEdit); //ghi dữ liệu cua postedit
 
                                 Toast.makeText(AddPostActivity.this, "Cập nhật bài viết thành công", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(AddPostActivity.this, MainActivity.class);
                                 startActivity(intent);
-                                finish();
                             }
                         });
                     }
                 });
             } else {
                 // không có ảnh mới được tải lên, chỉ update title, content
-                postEdit.title = title;
+                postEdit.title = title; // chỉ xét lại
                 postEdit.content = content;
                 databaseReference.child(postEdit.uuid).setValue(postEdit); //ghi dữ liệu
                 Toast.makeText(AddPostActivity.this, "Cập nhật bài viết thành công", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AddPostActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish();
             }
 
         } else {
