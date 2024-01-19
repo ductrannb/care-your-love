@@ -49,6 +49,9 @@ public class UserListFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data: snapshot.getChildren()) {
                     User user = data.getValue(User.class);
+                    if (user.role == User.ROLE_ADMIN) {
+                        continue;
+                    }
                     boolean isExist = false;
                     for (int i=0; i < listUsers.size(); i++) {
                         if (listUsers.get(i).uuid.equals(user.uuid)) {

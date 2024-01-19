@@ -26,16 +26,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
 
-    private ArrayList<Post> dataList;
+    private List<Post> dataList;
     private Context context;
 
-    public PostAdapter(ArrayList<Post> dataList, Context context) {
+    public PostAdapter(List<Post> dataList, Context context) {
         this.dataList = dataList;
         this.context = context;
+    }
+
+    public void setDataList(List<Post> dataList) {
+        this.dataList = dataList;
+        notifyDataSetChanged();
     }
 
     // adapter đổ dl vào viewholder, view holder là hiển thị giao diện cho các item trong recycleview

@@ -59,6 +59,14 @@ public class PostDetailActivity extends AppCompatActivity {
         commentAdapter.unReplyComment();
         databaseReference = FirebaseDatabase.getInstance().getReference(Post.REFERENCE_NAME);
         getData();
+        postDetailConsultantName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PostDetailActivity.this, ProfileActivity.class);
+                intent.putExtra("consultantUUID", post.user_uuid);
+                startActivity(intent);
+            }
+        });
         btnBackToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

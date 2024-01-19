@@ -18,6 +18,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ducanh.care_your_love.Adapters.PostAdapter;
 import com.ducanh.care_your_love.Models.Post;
+import com.ducanh.care_your_love.Models.User;
+import com.ducanh.care_your_love.commons.Common;
+import com.ducanh.care_your_love.commons.Store;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dataList = new ArrayList<>();
         adapter = new PostAdapter(dataList, this);
         rcvListPost.setAdapter(adapter);
+        if (Store.userLogin.role == User.ROLE_USER_NORMAL) {
+            //Ẩn nút đăng bài nếu người dùng thường đăng nhập
+            linkCreatePost.setVisibility(View.INVISIBLE);
+        }
 
         //đây là xử lý nav menu
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -114,7 +121,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_change_password:
                 startActivity(new Intent(MainActivity.this, ChangePasswordActivity.class));
                 break;
-
+            case R.id.nav_list_chat:
+                startActivity(new Intent(MainActivity.this, ListChatActivity.class));
+                break;
+            case R.id.nav_logout:
+                Common.logout(this);
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

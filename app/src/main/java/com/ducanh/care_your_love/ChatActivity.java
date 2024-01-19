@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.ducanh.care_your_love.Adapters.MessageAdapter;
 import com.ducanh.care_your_love.Models.Chat;
 import com.ducanh.care_your_love.Models.Message;
+import com.ducanh.care_your_love.Models.User;
 import com.ducanh.care_your_love.commons.Store;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -39,6 +42,7 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference reference;
     private static final String CHAT_LOG_TAG = "Chat";
+    private User userPartner;
 
 
     @Override
@@ -49,38 +53,63 @@ public class ChatActivity extends AppCompatActivity {
         // init firebase database instance
         database = FirebaseDatabase.getInstance();
         reference = database.getReference(Chat.REFERENCE_NAME);
-        getChat();
+        getChat(getIntent().getStringExtra("partnerUUID"));
 
         btnSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Message message = new Message(Store.userLoggedInUUID, inputMessage.getText().toString());
+                Message message = new Message(Store.userLogin.uuid, inputMessage.getText().toString());
                 sendChat(message);
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChatActivity.this, ListChatActivity.class));
             }
         });
     }
 
     public void sendChat(Message message) {
+        if (chat.messages == null) {
+            chat.messages = new ArrayList<>();
+        }
         chat.messages.add(message);
         reference.child(chat.uuid).setValue(chat);
         inputMessage.setText("");
     }
 
-    public void getChat() {
-        String chatUUID = "2da9a4fa-5119-4a33-94aa-30cfb6de1f6f";
-        reference.child(chatUUID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+    public void getChat(String partnerUUID) {
+        String user_uuid = Store.userLogin.role == User.ROLE_CONSULTANT ? partnerUUID : Store.userLogin.uuid;
+        String consultant_uuid = Store.userLogin.role == User.ROLE_CONSULTANT ? Store.userLogin.uuid : partnerUUID;
+        Query query = reference.orderByChild("user_uuid").equalTo(user_uuid);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    chat = task.getResult().getValue(Chat.class);
-                    labelPartnerName.setText(getChatPartnerName());
-                    messageAdapter = new MessageAdapter(chat.messages, ChatActivity.this);
-                    recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerViewMessages.setAdapter(messageAdapter);
-                    setEventListenerChat();
-                } else {
-                    Log.w(CHAT_LOG_TAG, "Get chat", task.getException());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    Chat chatObj = dataSnapshot.getValue(Chat.class);
+                    if (chatObj.consultant_uuid.equals(consultant_uuid)) {
+                        chat = chatObj;
+                        break;
+                    }
                 }
+                if (chat == null) {
+                    String user_uuid = Store.userLogin.role == User.ROLE_USER_NORMAL ? Store.userLogin.uuid : partnerUUID;
+                    String consultant_uuid = Store.userLogin.role == User.ROLE_CONSULTANT ? Store.userLogin.uuid : partnerUUID;
+                    chat = new Chat(user_uuid, consultant_uuid, new ArrayList<>());
+                    reference.child(chat.uuid).setValue(chat);
+                }
+                getChatPartnerName();
+                messageAdapter = new MessageAdapter(chat.messages, ChatActivity.this);
+                recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerViewMessages.setAdapter(messageAdapter);
+                setEventListenerChat();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -90,10 +119,12 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 chat = snapshot.getValue(Chat.class);
-                if (chat.messages.size() > messageAdapter.getItemCount()) {
+                if (chat.messages != null && chat.messages.size() > messageAdapter.getItemCount()) {
                     messageAdapter.newMessage(chat.messages.get(chat.messages.size() - 1));
                 }
-                recyclerViewMessages.scrollToPosition(messageAdapter.getItemCount() - 1);
+                if (messageAdapter.getItemCount() > 0) {
+                    recyclerViewMessages.scrollToPosition(messageAdapter.getItemCount() - 1);
+                }
             }
 
             @Override
@@ -103,14 +134,23 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    public String getChatPartnerName() {
-        if (chat == null) {
-            return "...";
+    public void getChatPartnerName() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(User.REFERENCE_NAME);
+        String partnerUUID;
+        if (chat.user_uuid.equals(Store.userLogin.uuid)) {
+            partnerUUID = chat.consultant_uuid;
+        } else {
+            partnerUUID = chat.user_uuid;
         }
-        if (chat.user_uuid.equals(Store.userLoggedInUUID)) {
-            return "Nguoi dung"; // pending get info user
-        }
-        return "Chuyen gia"; //pending get info consultant
+        databaseReference.child(partnerUUID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    userPartner = task.getResult().getValue(User.class);
+                    labelPartnerName.setText(userPartner.name);
+                }
+            }
+        });
     }
 
     public Context getContext() {

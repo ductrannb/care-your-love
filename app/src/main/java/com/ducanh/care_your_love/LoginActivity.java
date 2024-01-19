@@ -87,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
                     if (Store.userLogin.role == User.ROLE_USER_NORMAL || Store.userLogin.role == User.ROLE_CONSULTANT) {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
+                    } else if (Store.userLogin.role == User.ROLE_ADMIN) {
+                        startActivity(new Intent(LoginActivity.this, AdminActivity.class));
                     }
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!",Toast.LENGTH_SHORT).show();
                 } else {

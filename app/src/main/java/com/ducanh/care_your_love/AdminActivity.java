@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.ducanh.care_your_love.commons.Common;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -50,6 +51,7 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminAddUserFragment()).commit();
                 break;
             case R.id.nav_logout:
+                Common.logout(this);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

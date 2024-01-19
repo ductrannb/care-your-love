@@ -1,8 +1,11 @@
 package com.ducanh.care_your_love.commons;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import com.ducanh.care_your_love.LoginActivity;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -31,5 +34,10 @@ public class Common {
     public static void openKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.showSoftInput(activity.getCurrentFocus() != null ? activity.getCurrentFocus() : new View(activity), InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public static void logout(Activity activity) {
+        activity.startActivity(new Intent(activity, LoginActivity.class));
+        Store.userLogin = null;
     }
 }
