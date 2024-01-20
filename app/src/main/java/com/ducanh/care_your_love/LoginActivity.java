@@ -74,9 +74,9 @@ public class LoginActivity extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) { //dataSnapshot chứa data . user lấy ra từ dataSnapshot
-                boolean isLoginSuccesful = false;
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    User user = userSnapshot.getValue(User.class);
+                boolean isLoginSuccesful = false; //dl trả về từ FB sẽ dc ktra
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {// vong lap duyet dl
+                    User user = userSnapshot.getValue(User.class); // dữ liệu dc chuyển thành đối tượng User
                     if (user != null && user.password.equals(inputPassword.getText().toString())) {
                         isLoginSuccesful = true;
                         Store.userLogin = user;

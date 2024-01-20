@@ -171,7 +171,7 @@ public class AddPostActivity extends AppCompatActivity {
         inputTitle.setText(postEdit.title);
         inputContent.setText(postEdit.content);
         Glide.with(this).load(postEdit.image).into(imageView); //glide hiển thị ảnh
-        btnPost.setText("Sửa bài đăng"); // btnPost dc settext thành sửa bài đăng khi click btnPost sẽ xử lý tiếp ở dòng 125
+        btnPost.setText("Sửa bài đăng");
     }
     //outside onCreate
     private void uploadToFirebase(@Nullable Uri uri) { // Nullable vi co the sua khong them anh
@@ -179,10 +179,10 @@ public class AddPostActivity extends AppCompatActivity {
         String content = inputContent.getText().toString();
 
         if (postEdit != null) {
-            if (uri != null) { // sửa aảnh mới
+            if (uri != null) {
                 // Xu ly dang anh khi sua
                 StorageReference imageReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri)); //System.currentTimeMillis() + "." + getFileExtension(uri): đtặ cái tên cho anh theo thời gian
-                imageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {//putFile là firebase
+                imageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // xu ly upload image thành công
@@ -204,9 +204,9 @@ public class AddPostActivity extends AppCompatActivity {
                 });
             } else {
                 // không có ảnh mới được tải lên, chỉ update title, content
-                postEdit.title = title; // chỉ xét lại
+                postEdit.title = title;
                 postEdit.content = content;
-                databaseReference.child(postEdit.uuid).setValue(postEdit); //ghi dữ liệu
+                databaseReference.child(postEdit.uuid).setValue(postEdit);
                 Toast.makeText(AddPostActivity.this, "Cập nhật bài viết thành công", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AddPostActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -222,7 +222,7 @@ public class AddPostActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             Post post = new Post(Store.userLogin.uuid, title, content, uri.toString(), null);
-                            databaseReference.child(post.uuid).setValue(post); //ghi dữ liệu
+                            databaseReference.child(post.uuid).setValue(post);
                             Toast.makeText(AddPostActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(AddPostActivity.this, MainActivity.class);
                             startActivity(intent);

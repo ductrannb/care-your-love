@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<Post> dataList;
     PostAdapter adapter;
     final private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Post.REFERENCE_NAME);
-    //lấy tên người dùng hiển thị ở nav_header
+
     private TextView account;
 
     //Đổi mk
@@ -89,9 +89,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String keyword = searchPost.getText().toString();
 
-                Query query = databaseReference.orderByChild("created_at").orderByChild("title").startAt(keyword).endAt(keyword + "\uf8ff");
+                Query query = databaseReference.orderByChild("title").startAt(keyword).endAt(keyword + "\uf8ff");
                 query.addValueEventListener(new ValueEventListener() {
                     List<Post> postList = new ArrayList<>();
                     @Override
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Post post = dataSnapshot.getValue(Post.class); // chuyển dl về kiểu post
                             postList.add(post);
                         }
-                        adapter.setDataList(postList);
+                        adapter.setDataList(postList);//cập nhật giao diện hiển thị dsach bai viet tim dc
                     }
 
                     @Override
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        //////
+        //////hiển thị danh sách bài viết
         databaseReference.orderByChild("created_at").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
