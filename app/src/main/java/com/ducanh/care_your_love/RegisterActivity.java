@@ -90,8 +90,8 @@ public class RegisterActivity extends AppCompatActivity {
                 //truy cap và ghi dư liệu vào fb db
                 User user = new User(username, password, name, email, User.ROLE_USER_NORMAL, birthday, gender);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(); // lấy dtuong firebasedb thông qua getInsteance
-                DatabaseReference databaseReference = firebaseDatabase.getReference(User.REFERENCE_NAME);// dung ten bang ben model User: truy cap vao bang reference name trong model user
-                databaseReference.child(user.uuid).setValue(user); //
+                DatabaseReference databaseReference = firebaseDatabase.getReference(User.REFERENCE_NAME);// truy cap vao reference name trong model user
+                databaseReference.child(user.uuid).setValue(user); //ghi dữ liệu vào DB
 
                 Toast.makeText(RegisterActivity.this,"Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -99,14 +99,16 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+    //khỏi tạo và Hiển thị datepickerdialog cho ng dùng chọn và cập nhật giá trị của calender
     private void showDatePickerDialog() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {// khởi tạo
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {// cá giá trị dd/mm/yy dc lấy từ datepickerdialog và capapj nhật biến calendar
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, monthOfYear);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateBirthdayEditText();
+                updateBirthdayEditText();// hàm dc gọi để cập nhập trường ngày sinh với gía trị  mới
             }
         };
 
@@ -117,12 +119,12 @@ public class RegisterActivity extends AppCompatActivity {
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
-        datePickerDialog.show();
+        datePickerDialog.show();//hienr thị
     }
 
     private void updateBirthdayEditText() {
         String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());// định dạng lại giá trị của biến
         inputBirthday.setText(sdf.format(calendar.getTime()));
     }
 }
