@@ -40,6 +40,8 @@ public class AdminAddUserFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private User userEdit;
+    private EditText inputAddress;
+    private EditText inputPhone;
 
     public AdminAddUserFragment() { }
 
@@ -67,9 +69,13 @@ public class AdminAddUserFragment extends Fragment {
                 String password = inputPassword.getText().toString();
                 String name = inputName.getText().toString();
                 String email = inputEmail.getText().toString();
+                String address = inputAddress.getText().toString();
+                String phone = inputPhone.getText().toString();
                 int role = radioButtonUserNormal.isChecked() ? User.ROLE_USER_NORMAL : User.ROLE_CONSULTANT;
                 if (userEdit == null) {
                     User user = new User(username, password, name, email, role, null, User.GENDER_MALE);
+                    user.address = address;
+                    user.phone = phone;
                     updateOrCreateUser(user);
                 } else {
                     userEdit.username = username;
@@ -77,6 +83,8 @@ public class AdminAddUserFragment extends Fragment {
                     userEdit.name = name;
                     userEdit.email = email;
                     userEdit.role = role;
+                    userEdit.address = address;
+                    userEdit.phone = phone;
                     updateOrCreateUser(userEdit);
                 }
             }
@@ -114,6 +122,8 @@ public class AdminAddUserFragment extends Fragment {
         btnRegister = view.findViewById(R.id.btn_register);
         btnBack = view.findViewById(R.id.btn_back);
         labelTitle = view.findViewById(R.id.label_title);
+        inputAddress = view.findViewById(R.id.input_address);
+        inputPhone = view.findViewById(R.id.input_phone);
         if (userEdit != null) {
             fillData();
             labelTitle.setText("Sửa tài khoản");
@@ -126,6 +136,8 @@ public class AdminAddUserFragment extends Fragment {
         inputPassword.setText(userEdit.password);
         inputEmail.setText(userEdit.email);
         inputName.setText(userEdit.name);
+        inputAddress.setText(userEdit.address);
+        inputPhone.setText(userEdit.phone);
         if (userEdit.role == User.ROLE_USER_NORMAL) {
             radioButtonUserNormal.setChecked(true);
         } else {

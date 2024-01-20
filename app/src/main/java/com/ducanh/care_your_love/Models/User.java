@@ -18,6 +18,8 @@ public class User {
     public int role;
     public String created_at;
     public String fcmToken;
+    public String address;
+    public String phone;
 
     public static final String REFERENCE_NAME = "users"; //ten bang
 
