@@ -98,6 +98,15 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        labelName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, InfoConsultantActivity.class);
+                intent.putExtra("uuid", consultant.uuid);
+                startActivity(intent);
+            }
+        });
     }
 
     public void initUI() {
